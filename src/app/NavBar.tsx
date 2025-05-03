@@ -48,6 +48,8 @@ const NavBar = () => {
         <div className="nav__items">
           {isAuthenticated ? (
             <>
+              <div onClick={() => router.push("/play")}>Play</div>
+              <div onClick={() => router.push("/mypage")}>My page</div>
               <div
                 onClick={() => {
                   if (authState?.id) {
@@ -63,7 +65,6 @@ const NavBar = () => {
               >
                 Sign out
               </div>
-              <div onClick={() => router.push("/mypage")}>My page</div>
             </>
           ) : (
             <div onClick={() => router.push("/signin")}>Sign in</div>
