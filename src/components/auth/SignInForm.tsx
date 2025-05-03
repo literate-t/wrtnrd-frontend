@@ -53,6 +53,7 @@ const SignInForm = () => {
         }
       } catch (e) {
         console.error("Error", e);
+        notify("Login failed");
       }
     },
   });

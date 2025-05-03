@@ -5,6 +5,7 @@ import { Field, Form, Formik } from "formik";
 import * as Yup from "yup";
 import axios from "@/utils/axios";
 import { useRouter } from "next/navigation";
+import { notify } from "@/utils/common";
 
 interface FormValue {
   username: string;
@@ -65,6 +66,7 @@ const RegisterForm = () => {
           }
         } catch (e) {
           console.error("Error", e);
+          notify("Register failed");
         }
       }}
     >
