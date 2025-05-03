@@ -7,6 +7,8 @@ import { ChangeEvent, useCallback, useState } from "react";
 import { debounce } from "@/utils/common";
 import { useAuth } from "@/providers/AuthProvider";
 import { useRouter } from "next/navigation";
+import { authAtoms } from "@/atoms/authAtoms";
+import { useRecoilValue } from "recoil";
 
 interface FormValue {
   oldPassword: string;
@@ -41,6 +43,7 @@ const Password = () => {
   const [oldPassword, setOldPassword] = useState<string>("");
   const [isPasswordCorrect, setIsPasswordCorrect] = useState<boolean>(false);
   const { signOut } = useAuth();
+  const authState = useRecoilValue(authAtoms);
   const router = useRouter();
 
   const checkPassword = async (value: string) => {
@@ -59,6 +62,8 @@ const Password = () => {
 
   const handleSubmit = async (values: FormValue) => {
     let result;
+    if (authState == null) return;
+
     try {
       result = await axios("/api/user/change-password", {
         method: "POST",
@@ -68,7 +73,7 @@ const Password = () => {
       });
 
       notify(result.data);
-      signOut();
+      signOut(authState.id);
       router.replace("/signin");
     } catch (e: any) {
       const {
